@@ -1,7 +1,9 @@
 ﻿import time
 
 key1 = False
+key2 = False
 fusebox = False
+sword = False
 
 
 def hallway():
@@ -105,6 +107,8 @@ def utilityCloset():
     print("---UTILITY CLOSET---")
     choice = input("Mess witht he fusebox? Y/N?")
 
+    global fusebox
+
     valid = False
 
     while valid == False:
@@ -170,16 +174,66 @@ def elevator1():
     while valid == False:
         if choice.upper() == "Y" or choice.upper() == "YES" and fusebox == True :
            print("You enter the elevator and pull the lone lever within it, taking you up to the second floor")
-           # hallway2()
+           valid = True
+           hallway2()
         if choice.upper() == "Y" or choice.upper() == "YES" and fusebox == False :
            print("The Elevator is unresponsive. It appears to have no power being sent to it")
+           valid = True
         elif choice.upper() == "N" or choice.upper() == "NO":
             print("You leave the room")
+            valid = True
             diningRoom()
             
         else:
             print("What")
 
+def hallway2():
+   print("---Second Floor Hallway---")
+   print("Two doors meet you at either side. Theres a strange whailing coming from the west")
+   
+   valid = True
+
+   while valid == False:
+    direction = input("Theres doors West,East and North (Elevator). Input either W,E or N to choose your direction")
+    if direction.upper() == "W":
+            valid = True
+            grandBedroom()
+            
+    elif direction.upper() == "E":
+            valid = True
+            secondaryBedroom()
+    elif direction.upper() == "N":
+        print("You take the elevator back to the first floor")
+        diningRoom()
+
+    else:
+        print("You cant do that")
+
+def secondaryBedroom():
+    print("---SECONDARY BEDROOM---")
+    print("You enter what appears to be a son's room, half the roof is rotting and you can catch the stray raindrops from outside")
+
+    global sword
+
+    if sword == False:
+        print("Theres a sword on a stand, you take it")
+        sword = True
+    else:
+        print("Theres nothing interesting here")
+    print("You leave the way you came in")
+
+def grandBedroom():
+
+    global key2
+
+    #GHOST ENCOUNTER
+
+
+    
+
+
+
+    key2 = True
 
 
 start = time.time()
