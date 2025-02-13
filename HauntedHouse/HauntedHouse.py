@@ -1,9 +1,13 @@
-﻿import time
+﻿import random
+import time
 
 key1 = False
 key2 = False
 fusebox = False
 sword = False
+
+playerHP = 10
+playerDamageMultiplier = 1
 
 
 def hallway():
@@ -214,9 +218,11 @@ def secondaryBedroom():
     print("You enter what appears to be a son's room, half the roof is rotting and you can catch the stray raindrops from outside")
 
     global sword
+    global playerDamageMultiplier
 
     if sword == False:
         print("Theres a sword on a stand, you take it")
+        playerDamageMultiplier = 2
         sword = True
     else:
         print("Theres nothing interesting here")
@@ -226,15 +232,82 @@ def grandBedroom():
 
     global key2
 
-    #GHOST ENCOUNTER
+    ghostBattle = battleEncounter("001")
 
+    if ghostBattle >= 0:
+        print("You survive the fight against the ghoul and get find a key")
+        print("You are at",ghostBattle,"HP")
+
+        key2 = True
+
+
+def battleEncounter(monsterID):
+
+    stay = True
+
+    global playerDamageMultiplier
+    global playerHP
+
+    if monsterID == "001":
+        monster = "Ghost"
+        ATK = 6
+        HP = 10
+
+    elif monsterID == "002":
+        monster = "Rat"
+        ATK = 2
+        HP = 4
+
+    while stay = True:
+        print(monster,":",HP)
+        print("You have:",playerHP,"HP")
+
+        action = input("F - FIGHT OR R - RUN")
+
+        if action.upper == "F":
+            enemyroll = random.randint(1,ATK)
+            playerroll = random.randint(1,6)
+
+            if playerroll >= enemyroll:
+                print("You attack the enemy and deal",playerroll*playerDamageMultiplier,"damage points")
+                HP = HP - (playerroll * playerDamageMultiplier)
+            else:
+                print("The enemy attacks you and deals",enemyroll,"points of damage")
+                playerHP = playerHP - enemyroll
+
+        elif action == "R":
+            print("You run away, but still get hit on your way out")
+            enemyroll = random.randint(1,ATK)
+            playerHP = playerHP - enemyroll
+            stay = False
+            if monsterID == "001":
+                hallway2()
+            elif monsterID == "002":
+                kitchen()
+
+        if HP <= 0:
+            print("Monster Lost")
+            stay = False
+        elif playerHP <= 0:
+           gameOver("GHOST")
+
+
+
+
+
+
+
+
+def gameOver(death):
+    print("---GAME OVER---")
+
+    if death == "GHOST":
+        print("You died to a spectral foe")
+        
 
     
 
-
-
-    key2 = True
-
+        
 
 start = time.time()
 
