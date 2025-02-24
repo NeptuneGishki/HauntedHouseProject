@@ -7,7 +7,7 @@ fusebox = False
 sword = False
 
 playerHP = 10
-playerDamageMultiplier = 1
+playerDamageMultiplier = 3
 
 
 def hallway():
@@ -15,6 +15,9 @@ def hallway():
     print("You are in the hallway, a grand room. As you look around you see paintings and delicate ornaments. There are three exits​,")
 
     valid = False
+    
+    global key1
+    global fusebox
 
     while valid == False:
         direction = input("Theres door North and South. Input either N or S to choose your direction")
@@ -24,6 +27,13 @@ def hallway():
         elif direction.upper() == "S":
                valid = True
                livingRoom()
+        elif direction.upper() == ("TEST"):
+            print("Loading second floor...")
+            fusebox = True
+            key1 = True
+            hallway2()
+        elif direction.upper() == ("BATTLE TEST"):
+            grandBedroom()
         else:
             print("You cant do that")
 
@@ -106,10 +116,12 @@ def wineCellar():
     else:
 
         print("Theres nothing important in here.")
+        
+        grandHall()
 
 def utilityCloset():
     print("---UTILITY CLOSET---")
-    choice = input("Mess witht he fusebox? Y/N?")
+    choice = input("Mess with the fusebox? Y/N?")
 
     global fusebox
 
@@ -170,7 +182,7 @@ def diningRoom():
             print("You cant do that")
 
 def elevator1():
-    print("---UTILITY CLOSET---")
+    print("---ELEVATOR---")
     choice = input("Take the elevator Y/N?")
 
     valid = False
@@ -195,20 +207,20 @@ def hallway2():
    print("---Second Floor Hallway---")
    print("Two doors meet you at either side. Theres a strange whailing coming from the west")
    
-   valid = True
+   valid = False
 
    while valid == False:
+    
     direction = input("Theres doors West,East and North (Elevator). Input either W,E or N to choose your direction")
     if direction.upper() == "W":
             valid = True
             grandBedroom()
-            
     elif direction.upper() == "E":
             valid = True
             secondaryBedroom()
     elif direction.upper() == "N":
-        print("You take the elevator back to the first floor")
-        diningRoom()
+            print("You take the elevator back to the first floor")
+            diningRoom()
 
     else:
         print("You cant do that")
@@ -224,10 +236,13 @@ def secondaryBedroom():
         print("Theres a sword on a stand, you take it")
         playerDamageMultiplier = 2
         sword = True
+        hallway2()
+       
     else:
         print("Theres nothing interesting here")
-    print("You leave the way you came in")
-
+        print("You leave the way you came in")
+        hallway2()
+  
 def grandBedroom():
 
     global key2
@@ -239,6 +254,8 @@ def grandBedroom():
         print("You are at",ghostBattle,"HP")
 
         key2 = True
+        
+        hallway2()
 
 
 def battleEncounter(monsterID):
@@ -258,13 +275,13 @@ def battleEncounter(monsterID):
         ATK = 2
         HP = 4
 
-    while stay = True:
+    while stay == True:
         print(monster,":",HP)
         print("You have:",playerHP,"HP")
 
         action = input("F - FIGHT OR R - RUN")
 
-        if action.upper == "F":
+        if action.upper() == "F":
             enemyroll = random.randint(1,ATK)
             playerroll = random.randint(1,6)
 
@@ -275,7 +292,7 @@ def battleEncounter(monsterID):
                 print("The enemy attacks you and deals",enemyroll,"points of damage")
                 playerHP = playerHP - enemyroll
 
-        elif action == "R":
+        elif action.upper() == "R":
             print("You run away, but still get hit on your way out")
             enemyroll = random.randint(1,ATK)
             playerHP = playerHP - enemyroll
@@ -290,6 +307,7 @@ def battleEncounter(monsterID):
             stay = False
         elif playerHP <= 0:
            gameOver("GHOST")
+           stay = False
 
 
 
